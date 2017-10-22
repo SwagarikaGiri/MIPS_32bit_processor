@@ -1,0 +1,63 @@
+#! c:/iverilog-x64/bin/vvp
+:ivl_version "10.1 (stable)" "(v10_1_1)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision + 0;
+:vpi_module "system";
+:vpi_module "vhdl_sys";
+:vpi_module "v2005_math";
+:vpi_module "va_math";
+S_000000000126d3b0 .scope module, "adder_32_bit_tb" "adder_32_bit_tb" 2 2;
+ .timescale 0 0;
+v00000000008229b0_0 .var "input1", 31 0;
+v0000000000822a50_0 .var "input2", 31 0;
+v0000000000822af0_0 .net "output1", 31 0, v0000000000857780_0;  1 drivers
+v0000000000822b90_0 .net "overflow", 0 0, v0000000000857820_0;  1 drivers
+S_0000000000822830 .scope module, "uu1" "adder_32_bit" 2 6, 3 1 0, S_000000000126d3b0;
+ .timescale 0 0;
+    .port_info 0 /INPUT 32 "input1"
+    .port_info 1 /INPUT 32 "input2"
+    .port_info 2 /OUTPUT 32 "output1"
+    .port_info 3 /OUTPUT 1 "overflow"
+v000000000126d530_0 .net "input1", 31 0, v00000000008229b0_0;  1 drivers
+v000000000126d5d0_0 .net "input2", 31 0, v0000000000822a50_0;  1 drivers
+v0000000000857780_0 .var "output1", 31 0;
+v0000000000857820_0 .var "overflow", 0 0;
+E_0000000000853ca0 .event edge, v000000000126d5d0_0, v000000000126d530_0;
+    .scope S_0000000000822830;
+T_0 ;
+    %wait E_0000000000853ca0;
+    %load/vec4 v000000000126d530_0;
+    %pad/u 33;
+    %load/vec4 v000000000126d5d0_0;
+    %pad/u 33;
+    %add;
+    %split/vec4 32;
+    %store/vec4 v0000000000857780_0, 0, 32;
+    %store/vec4 v0000000000857820_0, 0, 1;
+    %jmp T_0;
+    .thread T_0, $push;
+    .scope S_000000000126d3b0;
+T_1 ;
+    %vpi_call 2 9 "$monitor", "input1 =%d input2=%d output=%d overflow=%d ", v00000000008229b0_0, v0000000000822a50_0, v0000000000822af0_0, v0000000000822b90_0 {0 0 0};
+    %pushi/vec4 4294967295, 0, 32;
+    %store/vec4 v00000000008229b0_0, 0, 32;
+    %pushi/vec4 1000000000, 0, 32;
+    %store/vec4 v0000000000822a50_0, 0, 32;
+    %delay 50, 0;
+    %pushi/vec4 10000, 0, 32;
+    %store/vec4 v00000000008229b0_0, 0, 32;
+    %pushi/vec4 38078, 0, 32;
+    %store/vec4 v0000000000822a50_0, 0, 32;
+    %delay 50, 0;
+    %pushi/vec4 1000, 0, 32;
+    %store/vec4 v00000000008229b0_0, 0, 32;
+    %pushi/vec4 3878, 0, 32;
+    %store/vec4 v0000000000822a50_0, 0, 32;
+    %end;
+    .thread T_1;
+# The file index is used to find the file name in the following table.
+:file_names 4;
+    "N/A";
+    "<interactive>";
+    "adder_32_bit_tb.v";
+    "adder_32_bit.v";
